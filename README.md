@@ -20,7 +20,7 @@ By accurately predicting customer behavior, banks can:
 
 ## 🚀 **Live Demo**
 
-**[🔗 Try the Interactive Prediction App](your-deployed-app-link-here)**
+**[🔗 Try the Interactive Prediction App](https://bank-outcome-prediction-system.streamlit.app/)**
 
 Or run locally:
 ```bash
