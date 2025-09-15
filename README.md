@@ -7,7 +7,7 @@
 
 > **A complete end-to-end machine learning solution for predicting customer subscription to bank term deposits, featuring comprehensive analysis, model comparison, and production-ready deployment.**
 
-![Demo Screenshot](https://via.placeholder.com/800x400/1f77b4/ffffff?text=Bank+Marketing+Prediction+Dashboard)
+![Demo Screenshot](./assets/bank_predict.png)
 
 ## 🎯 **Business Problem**
 
@@ -24,8 +24,8 @@ By accurately predicting customer behavior, banks can:
 
 Or run locally:
 ```bash
-git clone https://github.com/yourusername/bank-marketing-prediction
-cd bank-marketing-prediction
+git clone https://github.com/NguyenThuan-data/Bank_Outcome_Prediction_System.git
+cd Bank_Outcome_Prediction_System.git
 pip install -r requirements.txt
 streamlit run app.py
 ```
@@ -100,7 +100,6 @@ bank-marketing-prediction/
 ├── 🤖 *.pkl                    # Trained model files
 ├── 📋 requirements.txt         # Dependencies
 ├── 📖 README.md               # This file
-└── 🔧 .gitignore              # Git ignore rules
 ```
 
 ## 💼 **Business Value Demonstration**
@@ -138,38 +137,7 @@ bank-marketing-prediction/
 **Instructor**: Dr. Akbar Ghobakhlou  
 **Teaching Assistant**: Achmad Pahlevi  
 
-## 🚀 **Quick Start**
-
-### **Prerequisites**
-```bash
-Python 3.8+
-pip install -r requirements.txt
-```
-
-### **Run Analysis**
-```bash
-# Open Jupyter notebook for full analysis
-jupyter notebook Bank_Analysis.ipynb
-
-# Or run the Streamlit app directly
-streamlit run app.py
-```
-
-### **Make Predictions**
-```python
-# Example API usage
-customer_data = {
-    'duration': 250,
-    'contact': 'cellular',
-    'previous': 1,
-    'housing': 'no',
-    'pdays': 180
-}
-# Returns: Prediction + Confidence Score
-```
-
-
-### 🏆 **what I have improve from original school project**
+## 🏆 **what I have improve from original school project**
 - **End-to-End Solution**: From raw data to deployed application
 - **Technical Excellence**: Clean code, proper documentation, best practices
 - **Production Ready**: Deployable solution with user interface
