@@ -409,7 +409,7 @@ def render_prediction_results() -> None:
     with right_col:
         st.plotly_chart(
             create_probability_chart(primary_result),
-            use_container_width=True,
+            width="stretch",
         )
 
 
@@ -459,7 +459,7 @@ def render_supporting_insights() -> None:
     insight_col1, insight_col2 = st.columns([1.2, 1])
 
     with insight_col1:
-        st.plotly_chart(create_feature_importance_chart(), use_container_width=True)
+        st.plotly_chart(create_feature_importance_chart(), width="stretch")
 
     with insight_col2:
         st.markdown(
