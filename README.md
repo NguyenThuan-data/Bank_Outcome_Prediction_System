@@ -1,145 +1,143 @@
-# 🏦 Bank Marketing Campaign Prediction System
+# Bank Marketing Prediction System
 
-[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-1.28+-red.svg)](https://streamlit.io/)
-[![Scikit-learn](https://img.shields.io/badge/Scikit--learn-1.3+-orange.svg)](https://scikit-learn.org/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/Python-3.10-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/downloads/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-Live%20Demo-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-Classification-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)](https://scikit-learn.org/)
+[![Plotly](https://img.shields.io/badge/Plotly-Interactive%20Charts-3F4F75?style=for-the-badge&logo=plotly&logoColor=white)](https://plotly.com/)
 
-> **A complete end-to-end machine learning solution for predicting customer subscription to bank term deposits, featuring comprehensive analysis, model comparison, and production-ready deployment.**
+> Predict whether a bank customer is likely to subscribe to a term deposit, then present that result in a way a recruiter, stakeholder, or non-technical user can understand quickly.
 
-![Demo Screenshot](./assets/bank_predict.png)
+## App Preview
 
-## 🎯 **Business Problem**
+![Bank marketing landing view](./assets/bank_predict_landing_clean.png)
 
-Banks spend significant resources on marketing campaigns to promote term deposits. This project addresses the critical business question: **"Can we predict which customers are most likely to subscribe to a term deposit?"** 
+![Bank marketing prediction result](./assets/bank_predict_result_panel.png)
 
-By accurately predicting customer behavior, banks can:
-- **Optimize marketing spend** by targeting high-probability customers
-- **Increase conversion rates** from 11.7% baseline to targeted campaigns
-- **Reduce customer acquisition costs** through precision targeting
+## Why This Project Matters
 
-## 🚀 **Live Demo**
+Marketing campaigns are expensive when sales teams contact everyone the same way. This project reframes that problem into a practical ML workflow:
 
-**[🔗 Try the Interactive Prediction App](https://bank-outcome-prediction-system.streamlit.app/)**
+- identify which customers are more likely to convert
+- prioritize outreach using predicted probability
+- package the result into an interactive app instead of leaving it inside a notebook
 
-Or run locally:
+The dataset baseline subscription rate is `11.7%`, so even modest targeting improvements can make outreach more efficient.
+
+## Try The Demo
+
+Live app: [bank-outcome-prediction-system.streamlit.app](https://bank-outcome-prediction-system.streamlit.app/)
+
+If the Streamlit app takes a moment to open, it may be waking up from sleep.
+
+Run locally:
+
 ```bash
 git clone https://github.com/NguyenThuan-data/Bank_Outcome_Prediction_System.git
-cd Bank_Outcome_Prediction_System.git
+cd Bank_Outcome_Prediction_System
 pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## 📊 **Key Results & Performance**
+## What The App Does
 
-| Model | Accuracy | Precision | Recall | F1-Score | Business Impact |
-|-------|----------|-----------|---------|----------|-----------------|
-| **KNN** | **89.09%** | 0.91 | 0.97 | 0.94 | **Best Overall** |
-| Neural Network | 88.41% | 0.89 | 0.98 | 0.94 | High Precision |
-| Naive Bayes | 85.41% | 0.92 | 0.92 | 0.92 | Baseline Model |
+The app is designed around a simple recruiter-friendly flow:
 
-### 🎯 **Business Metrics**
-- **Cost Reduction**: 67% reduction in unnecessary marketing contacts
-- **ROI Improvement**: 3.2x increase in campaign effectiveness
-- **Precision Targeting**: 91% accuracy in identifying likely subscribers
+1. Enter a few customer attributes from the campaign dataset.
+2. Get a predicted outcome from the best live model.
+3. Review probability, confidence, and a short business recommendation.
+4. Compare the live result with the other saved benchmark models.
 
-## 🔧 **Technical Implementation**
+## Demo Workflow
 
-### **Architecture Overview**
-```
-Data Pipeline → Feature Engineering → Model Training → Deployment
-     ↓               ↓                    ↓              ↓
-   EDA +          Top 5 Features      3 ML Models    Streamlit App
- Preprocessing    (ANOVA F-test)      Comparison     + Model Serving
-```
+```mermaid
+flowchart LR
+    userInput[UserInput]
+    featureEncoding[FeatureEncoding]
+    liveModels[LiveModels]
+    primaryDecision[PrimaryDecision]
+    comparisonView[ComparisonView]
+    insightView[InsightView]
 
-### **Core Technologies**
-- **Machine Learning**: Scikit-learn (KNN, Naive Bayes, MLP)
-- **Data Processing**: Pandas, NumPy
-- **Visualization**: Matplotlib, Seaborn, Plotly
-- **Deployment**: Streamlit
-- **Development**: Jupyter Notebooks
-
-### **Feature Engineering Highlights**
-- **Advanced Feature Selection**: ANOVA F-test identified top 5 predictive features
-- **Smart Encoding**: Label encoding for categorical variables
-- **Class Imbalance Handling**: Stratified sampling for robust validation
-- **Cross-validation**: 10-fold stratified CV for reliable performance estimates
-
-## 📈 **Data Science Methodology**
-
-### **1. Exploratory Data Analysis**
-- **Dataset**: 4,521 records, 17 features
-- **Target Distribution**: 11.7% positive class (subscription rate)
-- **Data Quality**: No missing values, no duplicates
-- **Key Insights**: Call duration is the strongest predictor (F-score: 601.82)
-
-### **2. Feature Selection & Engineering**
-```python
-# Top 5 Features by ANOVA F-Score
-1. duration     (601.82) - Call duration in seconds
-2. previous     (70.06)  - Number of previous contacts  
-3. contact      (57.44)  - Contact communication type
-4. housing      (40.32)  - Housing loan status
-5. pdays        (37.54)  - Days since previous contact
+    userInput --> featureEncoding
+    featureEncoding --> liveModels
+    liveModels --> primaryDecision
+    liveModels --> comparisonView
+    primaryDecision --> insightView
 ```
 
-### **3. Model Development & Validation**
-- **Cross-Validation**: 10-fold stratified to handle class imbalance
-- **Hyperparameter Tuning**: Grid search for optimal parameters
-- **Model Comparison**: Comprehensive evaluation across multiple metrics
-- **Production Pipeline**: Serialized models with joblib for deployment
+## Model Results
 
-## 🛠 **Project Structure**
+| Model | Accuracy | Live In App | Notes |
+| --- | ---: | --- | --- |
+| KNN | 89.09% | Yes | Primary decision model in the app |
+| Neural Network | 88.05% | Offline benchmark | Trained on a wider feature pipeline than the current live demo collects |
+| Naive Bayes | 85.41% | Yes | Available as a live comparison model |
+
+## What This Project Demonstrates
+
+### Machine Learning Workflow
+- Exploratory analysis and data understanding
+- Feature selection using ANOVA F-score
+- Classification model comparison across multiple approaches
+- Packaging trained models into a usable interface
+
+### Product Thinking
+- Translating model output into a simple decision flow
+- Presenting probability and confidence instead of only a class label
+- Making a technical project understandable to non-technical reviewers
+
+### Engineering Decisions
+- Lightweight Streamlit deployment for quick interaction
+- Saved model artifacts for repeatable inference
+- Cleaner separation between form input, prediction logic, comparison, and insights
+
+## Key Features Used In The Live Demo
+
+The live app uses the five strongest selected predictors from the analysis:
+
+| Feature | Why It Matters |
+| --- | --- |
+| `duration` | Strongest signal of customer intent |
+| `previous` | Indicates prior campaign engagement |
+| `contact` | Captures communication channel differences |
+| `housing` | Reflects current financial obligations |
+| `pdays` | Measures recency of previous outreach |
+
+## Tech Stack
+
+- Python
+- Streamlit
+- scikit-learn
+- Pandas
+- Plotly
+- Joblib
+- Jupyter Notebook
+
+## Repository Structure
+
+```text
+Bank_Outcome_Prediction_System/
+├── Bank_Analysis.ipynb
+├── Bank_Analysis.pdf
+├── app.py
+├── bank.csv
+├── knn_model.pkl
+├── mlp_model.pkl
+├── naive_bayes_model.pkl
+├── model_info.pkl
+├── assets/
+│   └── bank_predict.png
+├── requirements.txt
+└── README.md
 ```
-bank-marketing-prediction/
-├── 📊 Bank_Analysis.ipynb      # Complete analysis & model training
-├── 🚀 app.py                   # Streamlit deployment app
-├── 📄 Bank_Analysis.pdf        # Detailed technical report
-├── 📊 bank.csv                 # Dataset
-├── 🤖 *.pkl                    # Trained model files
-├── 📋 requirements.txt         # Dependencies
-├── 📖 README.md               # This file
-```
 
-## 💼 **Business Value Demonstration**
+## Honest Notes
 
-### **Cost-Benefit Analysis**
-- **Current Approach**: Broad marketing campaigns with 11.7% success rate
-- **ML-Driven Approach**: Targeted campaigns with 89.09% accuracy
-- **Estimated Savings**: $50K+ annually in reduced marketing costs
-- **Revenue Impact**: 3x improvement in campaign ROI
+- The live demo is intentionally focused on the clearest five-feature prediction path.
+- The neural network result is retained as an offline benchmark, but its training pipeline expects more inputs than the current demo form collects.
+- This repo is strongest as a portfolio project that demonstrates end-to-end ML thinking, deployment, and communication, rather than a full production banking system.
 
-### **Scalability & Production Readiness**
-- ✅ **Model Serialization**: Production-ready pickle files
-- ✅ **Web Interface**: User-friendly Streamlit dashboard
-- ✅ **Error Handling**: Robust input validation and exception handling
-- ✅ **Documentation**: Comprehensive code documentation
-- ✅ **Version Control**: Git best practices with proper .gitignore
+## Academic Context
 
-## 🎓 **Skills Demonstrated**
-
-### **Technical Skills**
-- **Machine Learning**: Classification algorithms, model selection, hyperparameter tuning
-- **Data Science**: EDA, feature engineering, statistical analysis
-- **Python Programming**: Clean, documented, production-ready code
-- **Data Visualization**: statistical plots
-- **MLOps**: Model deployment
-### **Business Skills**
-- **Problem Solving**: Translated business needs into technical solutions
-- **Communication**: Clear documentation and interactive visualizations
-- **Project Management**: End-to-end project delivery from analysis to deployment
-
-## 📚 **Academic Context**
-
-**Course**: COMP615 - Foundation of Data Science  
-**Institution**: Auckland University of Technology (2024)  
-**Instructor**: Dr. Akbar Ghobakhlou  
-**Teaching Assistant**: Achmad Pahlevi  
-
-## 🏆 **what I have improve from original school project**
-- **End-to-End Solution**: From raw data to deployed application
-- **Technical Excellence**: Clean code, proper documentation, best practices
-- **Production Ready**: Deployable solution with user interface
-- **Comprehensive Analysis**: Statistical rigor with practical insights
+This project was originally developed from coursework in `COMP615 - Foundation of Data Science` at Auckland University of Technology, then improved into a more complete portfolio piece with a live app and stronger presentation.
 
