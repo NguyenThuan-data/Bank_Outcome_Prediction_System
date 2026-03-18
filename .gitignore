@@ -1,0 +1,11 @@
+# Python environments
+.venv/
+.venv_fast/
+__pycache__/
+*.pyc
+
+# Local Test Output
+test_output.csv
+
+# OS generated files
+.DS_Store

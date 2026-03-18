@@ -29,7 +29,7 @@ Live app: [bank-outcome-prediction-system.streamlit.app](https://bank-outcome-pr
 
 If the Streamlit app takes a moment to open, it may be waking up from sleep.
 
-Run locally:
+Run locally (Python):
 
 ```bash
 git clone https://github.com/NguyenThuan-data/Bank_Outcome_Prediction_System.git
@@ -37,6 +37,14 @@ cd Bank_Outcome_Prediction_System
 pip install -r requirements.txt
 streamlit run app.py
 ```
+
+Run with Docker (Recommended):
+
+```bash
+docker build -t bank-predictor .
+docker run -p 8501:8501 bank-predictor
+```
+Then open `http://localhost:8501` to view your app.
 
 ## What The App Does
 
@@ -46,6 +54,15 @@ The app is designed around a simple recruiter-friendly flow:
 2. Get a predicted outcome from the best live model.
 3. Review probability, confidence, and a short business recommendation.
 4. Compare the live result with the other saved benchmark models.
+
+## Batch Scoring for Production
+
+Real business applications often need to score thousands of leads at once rather than using a manual UI. You can use the `batch_score.py` script to process a `.csv` file directly:
+
+```bash
+python batch_score.py bank.csv -o scored_leads.csv
+```
+This bridges the gap between Data Science (models) and Engineering (backend processing) by demonstrating how the ML model can be decoupled from the UI and deployed as a batch process.
 
 ## Demo Workflow
 
@@ -119,7 +136,9 @@ The live app uses the five strongest selected predictors from the analysis:
 Bank_Outcome_Prediction_System/
 ├── Bank_Analysis.ipynb
 ├── Bank_Analysis.pdf
+├── Dockerfile
 ├── app.py
+├── batch_score.py
 ├── bank.csv
 ├── knn_model.pkl
 ├── mlp_model.pkl
