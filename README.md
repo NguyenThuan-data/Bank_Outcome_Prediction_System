@@ -1,7 +1,7 @@
 # Bank Marketing Prediction System
 
 [![Python](https://img.shields.io/badge/Python-3.10-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/downloads/)
-[![Streamlit](https://img.shields.io/badge/Streamlit-Live%20Demo-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-App-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-Classification-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)](https://scikit-learn.org/)
 [![Plotly](https://img.shields.io/badge/Plotly-Interactive%20Charts-3F4F75?style=for-the-badge&logo=plotly&logoColor=white)](https://plotly.com/)
 
@@ -25,11 +25,7 @@ The dataset baseline subscription rate is `11.7%`, so even modest targeting impr
 
 ## Try The Demo
 
-Live app: [bank-outcome-prediction-system.streamlit.app](https://bank-outcome-prediction-system.streamlit.app/)
-
-If the Streamlit app takes a moment to open, it may be waking up from sleep.
-
-Run locally (Python):
+**Recommended:** run locally (verified working) — screenshots above show the full UI.
 
 ```bash
 git clone https://github.com/NguyenThuan-data/Bank_Outcome_Prediction_System.git
@@ -38,13 +34,16 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Run with Docker (Recommended):
+Open `http://localhost:8501`.
+
+**Docker:**
 
 ```bash
 docker build -t bank-predictor .
 docker run -p 8501:8501 bank-predictor
 ```
-Then open `http://localhost:8501` to view your app.
+
+> **Note:** The hosted Streamlit Cloud link is temporarily unavailable (login redirect). Use local run or Docker for the interactive demo. The app and models in this repo are complete.
 
 ## What The App Does
 
@@ -62,6 +61,7 @@ Real business applications often need to score thousands of leads at once rather
 ```bash
 python batch_score.py bank.csv -o scored_leads.csv
 ```
+
 This bridges the gap between Data Science (models) and Engineering (backend processing) by demonstrating how the ML model can be decoupled from the UI and deployed as a batch process.
 
 ## Demo Workflow
@@ -159,4 +159,3 @@ Bank_Outcome_Prediction_System/
 ## Academic Context
 
 This project was originally developed from coursework in `COMP615 - Foundation of Data Science` at Auckland University of Technology, then improved into a more complete portfolio piece with a live app and stronger presentation.
-
