@@ -1,31 +1,52 @@
-# Bank Marketing Prediction System
+# Bank Marketing Prediction System — Portfolio Case Study
 
 [![Python](https://img.shields.io/badge/Python-3.10-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/downloads/)
 [![Streamlit](https://img.shields.io/badge/Streamlit-App-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
 [![scikit-learn](https://img.shields.io/badge/scikit--learn-Classification-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)](https://scikit-learn.org/)
-[![Plotly](https://img.shields.io/badge/Plotly-Interactive%20Charts-3F4F75?style=for-the-badge&logo=plotly&logoColor=white)](https://plotly.com/)
 
-> Predict whether a bank customer is likely to subscribe to a term deposit, then present that result in a way a recruiter, stakeholder, or non-technical user can understand quickly.
+> Predict whether a bank customer will subscribe to a term deposit — then package the model so a non-technical reviewer can actually use it.
 
-## App Preview
+---
+
+## Why I built this
+
+This started as **COMP615 coursework** at Auckland University of Technology, then became a portfolio iteration. Marketing campaigns are expensive when everyone gets the same outreach. With an **11.7% baseline subscription rate**, even modest targeting improvements matter — but a notebook accuracy score does not help a sales team. I rebuilt the project around **clickable delivery**.
+
+## The challenge
+
+- **Imbalanced classes:** Only ~1 in 9 customers converts — accuracy alone is misleading.
+- **Stakeholder readability:** Recruiters and business users need probability, confidence, and a plain recommendation — not a confusion matrix.
+- **Beyond the UI:** Real teams score thousands of leads at once; the app had to coexist with batch processing.
+
+## What I did
+
+1. Explored the UCI bank marketing dataset and selected top predictors via ANOVA F-score.
+2. Compared KNN, Naive Bayes, and neural network classifiers — **KNN at 89.09%** became the live model.
+3. Built a **Streamlit app** (`app.py`) with probability, confidence, and model comparison views.
+4. Added **`batch_score.py`** to score CSV files without the UI — the engineering bridge from demo to pipeline.
+5. Containerized with **Docker** for repeatable local deployment.
+
+## What I learned
+
+- Deploy something people can **click**, not just notebooks they cannot open.
+- On imbalanced data, show **probability and business framing** — not only accuracy.
+- `batch_score.py` taught me to decouple inference from presentation — the same pattern used in production ML services.
+
+## How this leveled me up
+
+| | |
+|---|---|
+| **Before** | I stopped at model comparison tables in Jupyter |
+| **After** | I can ship an interactive classifier with batch scoring and Docker |
+| **Unlocked next** | Full-stack APIs, warehouse pipelines, and stakeholder-facing analytics dashboards |
+
+## Demo / proof
 
 ![Bank marketing landing view](./assets/bank_predict_landing_clean.png)
 
 ![Bank marketing prediction result](./assets/bank_predict_result_panel.png)
 
-## Why This Project Matters
-
-Marketing campaigns are expensive when sales teams contact everyone the same way. This project reframes that problem into a practical ML workflow:
-
-- identify which customers are more likely to convert
-- prioritize outreach using predicted probability
-- package the result into an interactive app instead of leaving it inside a notebook
-
-The dataset baseline subscription rate is `11.7%`, so even modest targeting improvements can make outreach more efficient.
-
-## Try The Demo
-
-**Recommended:** run locally (verified working) — screenshots above show the full UI.
+**Recommended:** run locally (verified working).
 
 ```bash
 git clone https://github.com/NguyenThuan-data/Bank_Outcome_Prediction_System.git
@@ -34,7 +55,7 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Open `http://localhost:8501`.
+Open [http://localhost:8501](http://localhost:8501).
 
 **Docker:**
 
@@ -43,28 +64,24 @@ docker build -t bank-predictor .
 docker run -p 8501:8501 bank-predictor
 ```
 
-> **Note:** The hosted Streamlit Cloud link is temporarily unavailable (login redirect). Use local run or Docker for the interactive demo. The app and models in this repo are complete.
-
-## What The App Does
-
-The app is designed around a simple recruiter-friendly flow:
-
-1. Enter a few customer attributes from the campaign dataset.
-2. Get a predicted outcome from the best live model.
-3. Review probability, confidence, and a short business recommendation.
-4. Compare the live result with the other saved benchmark models.
-
-## Batch Scoring for Production
-
-Real business applications often need to score thousands of leads at once rather than using a manual UI. You can use the `batch_score.py` script to process a `.csv` file directly:
+**Batch scoring:**
 
 ```bash
 python batch_score.py bank.csv -o scored_leads.csv
 ```
 
-This bridges the gap between Data Science (models) and Engineering (backend processing) by demonstrating how the ML model can be decoupled from the UI and deployed as a batch process.
+> **Note:** Hosted Streamlit Cloud is temporarily unavailable. Use local run or Docker for the interactive demo.
 
-## Demo Workflow
+---
+
+## Technical reference
+
+### App flow
+
+1. Enter customer attributes from the campaign dataset.
+2. Get a predicted outcome from the best live model.
+3. Review probability, confidence, and a short business recommendation.
+4. Compare the live result with other saved benchmark models.
 
 ```mermaid
 flowchart LR
@@ -82,80 +99,46 @@ flowchart LR
     primaryDecision --> insightView
 ```
 
-## Model Results
+### Model results
 
 | Model | Accuracy | Live In App | Notes |
 | --- | ---: | --- | --- |
-| KNN | 89.09% | Yes | Primary decision model in the app |
-| Neural Network | 88.05% | Offline benchmark | Trained on a wider feature pipeline than the current live demo collects |
-| Naive Bayes | 85.41% | Yes | Available as a live comparison model |
+| KNN | 89.09% | Yes | Primary decision model |
+| Neural Network | 88.05% | Offline benchmark | Wider feature pipeline than live demo form |
+| Naive Bayes | 85.41% | Yes | Live comparison model |
 
-## What This Project Demonstrates
-
-### Machine Learning Workflow
-- Exploratory analysis and data understanding
-- Feature selection using ANOVA F-score
-- Classification model comparison across multiple approaches
-- Packaging trained models into a usable interface
-
-### Product Thinking
-- Translating model output into a simple decision flow
-- Presenting probability and confidence instead of only a class label
-- Making a technical project understandable to non-technical reviewers
-
-### Engineering Decisions
-- Lightweight Streamlit deployment for quick interaction
-- Saved model artifacts for repeatable inference
-- Cleaner separation between form input, prediction logic, comparison, and insights
-
-## Key Features Used In The Live Demo
-
-The live app uses the five strongest selected predictors from the analysis:
+### Key features (live demo)
 
 | Feature | Why It Matters |
 | --- | --- |
 | `duration` | Strongest signal of customer intent |
-| `previous` | Indicates prior campaign engagement |
-| `contact` | Captures communication channel differences |
-| `housing` | Reflects current financial obligations |
-| `pdays` | Measures recency of previous outreach |
+| `previous` | Prior campaign engagement |
+| `contact` | Communication channel differences |
+| `housing` | Current financial obligations |
+| `pdays` | Recency of previous outreach |
 
-## Tech Stack
+### Tech stack
 
-- Python
-- Streamlit
-- scikit-learn
-- Pandas
-- Plotly
-- Joblib
-- Jupyter Notebook
+Python · Streamlit · scikit-learn · Pandas · Plotly · Joblib · Docker
 
-## Repository Structure
+### Repository structure
 
 ```text
 Bank_Outcome_Prediction_System/
 ├── Bank_Analysis.ipynb
-├── Bank_Analysis.pdf
-├── Dockerfile
 ├── app.py
 ├── batch_score.py
 ├── bank.csv
 ├── knn_model.pkl
-├── mlp_model.pkl
 ├── naive_bayes_model.pkl
-├── model_info.pkl
+├── mlp_model.pkl
 ├── assets/
-│   └── bank_predict.png
-├── requirements.txt
-└── README.md
+├── Dockerfile
+└── requirements.txt
 ```
 
-## Honest Notes
+### Honest notes
 
-- The live demo is intentionally focused on the clearest five-feature prediction path.
-- The neural network result is retained as an offline benchmark, but its training pipeline expects more inputs than the current demo form collects.
-- This repo is strongest as a portfolio project that demonstrates end-to-end ML thinking, deployment, and communication, rather than a full production banking system.
-
-## Academic Context
-
-This project was originally developed from coursework in `COMP615 - Foundation of Data Science` at Auckland University of Technology, then improved into a more complete portfolio piece with a live app and stronger presentation.
+- Live demo uses the clearest five-feature prediction path.
+- Neural network is retained as offline benchmark — its pipeline expects more inputs than the demo form.
+- Strongest as a portfolio piece demonstrating end-to-end ML thinking and communication, not a production banking system.
